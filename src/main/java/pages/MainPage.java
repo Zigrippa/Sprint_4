@@ -50,6 +50,15 @@ public class MainPage {
         return new OrderPage(driver);
     }
 
+    public OrderPage clickAnyOrderButton(String button) {
+        if (button.equals("headButton")){
+            driver.findElement(orderButtonHead).click();
+        } else if (button.equals("bottomButton")) {
+            driver.findElement(orderButtonBottom).click();
+        }
+        return new OrderPage(driver);
+    }
+
     public MainPage scrollPageToQuestions() {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",
                 driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[5]/div[1]")));

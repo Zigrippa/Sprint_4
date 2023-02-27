@@ -19,6 +19,7 @@ import static junit.framework.TestCase.assertTrue;
 public class OrderTests {
 
     private WebDriver driver;
+    private String button;
     private String firstName;
     private String secondName;
     private String address;
@@ -29,9 +30,10 @@ public class OrderTests {
     private String color;
     private String comment;
 
-    public OrderTests(String firstName, String secondName, String address,
+    public OrderTests(String button, String firstName, String secondName, String address,
                       int metroStation, String telephoneNumber, String date, int daysToDeliver,
                       String color, String comment) {
+        this.button = button;
         this.firstName = firstName;
         this.secondName = secondName;
         this.address = address;
@@ -46,67 +48,27 @@ public class OrderTests {
     @Parameterized.Parameters
     public static Object[][] getData() {
         return new Object[][]{
-                {"Николай", "Степаненко", "ул. Боро-боро д.3 кв.8", 1, "89202223311",
+                {"headButton", "Николай", "Степаненко", "ул. Боро-боро д.3 кв.8", 1, "89202223311",
                         "26.02.2023", 1, "серая безысходность", "СПАСИБО!"},
-                {"Роман", "Игнатьев", "ул. Помогите д.666 кв.13", 4, "89202323311",
+                {"bottomButton", "Роман", "Игнатьев", "ул. Помогите д.666 кв.13", 4, "89202323311",
                         "25.02.2023", 2, "чёрный жемчуг", "Нужны дополнительные колёсики..."},
         };
     }
 
     @Before
     public void setup() {
-        driver = WebDriverFactory.get();
+        driver = WebDriverFactory.get("chrome");
     }
 
     /* Так как имеет место баг с невозможность оформить заказ. Тест падает.
     Цитата из тренажёра:
     "Обрати внимание: в приложении есть баг, который не даёт оформить заказ. Он воспроизводится только в Chrome."*/
 
-    // Основной Тест №2 Проверка позитивных сценариев при использовании Кнопки заказа в Header
+    // Основной Тест №2 Проверка позитивных сценариев
     @Test
-    public void checkOrderButtonHeadAndPositiveOrderCase() {
+    public void checkOrderButtonAndPositiveOrderCase() {
         boolean isStatusOrderWindowVisibleAfterOrder = new MainPage(driver)
-                .clickOrderButtonHead()
-                .inputFirstName(firstName)
-                .inputSecondName(secondName)
-                .inputAddressField(address)
-                .chooseMetroStation(metroStation)
-                .inputTelephoneNumber(telephoneNumber)
-                .clickNextPageButton()
-                .chooseDate(date)
-                .chooseDaysRent(daysRent)
-                .chooseColor(color)
-                .inputComment(comment)
-                .clickOrderButton()
-                .clickYesButton()
-                .isStatusOrderWindowVisible();
-        assertTrue(isStatusOrderWindowVisibleAfterOrder);
-        /*
-        код чтобы тест шел до окна подтверждения и проходил проверку
-        boolean isConfirmOrderWindowVisibleAfterOrder = new MainPage(driver)
-                .clickOrderButtonHead()
-                .inputFirstName(firstName)
-                .inputSecondName(secondName)
-                .inputAddressField(address)
-                .chooseMetroStation(metroStation)
-                .inputTelephoneNumber(telephoneNumber)
-                .clickNextPageButton()
-                .chooseDate(date)
-                .chooseDaysRent(daysRent)
-                .chooseColor(color)
-                .inputComment(comment)
-                .clickOrderButton()
-                .isConfirmOrderWindowVisible();
-        assertTrue(isConfirmOrderWindowVisibleAfterOrder);
-         */
-    }
-
-    // Основной Тест №2 Проверка позитивных сценариев при использовании Кнопки заказа расположенной внизу
-    @Test
-    public void checkOrderButtonBottomAndPositiveOrderCase() {
-        boolean isStatusOrderWindowVisibleAfterOrder = new MainPage(driver)
-                .scrollPageToOrderButtonBottom()
-                .clickOrderButtonBottom()
+                .clickAnyOrderButton(button)
                 .inputFirstName(firstName)
                 .inputSecondName(secondName)
                 .inputAddressField(address)
@@ -122,7 +84,6 @@ public class OrderTests {
                 .isStatusOrderWindowVisible();
         assertTrue(isStatusOrderWindowVisibleAfterOrder);
     }
-
 
     @After
     public void teardown() {

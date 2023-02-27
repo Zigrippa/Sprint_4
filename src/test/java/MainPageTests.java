@@ -20,7 +20,7 @@ public class MainPageTests {
 
     @Before
         public void setup() {
-            driver = WebDriverFactory.get();
+            driver = WebDriverFactory.get("chrome");
         }
 
 

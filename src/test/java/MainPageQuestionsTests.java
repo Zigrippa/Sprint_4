@@ -47,7 +47,7 @@ public class MainPageQuestionsTests {
 
     @Before
     public void setup() {
-        driver = WebDriverFactory.get();
+        driver = WebDriverFactory.get("chrome");
     }
 
     //Основной Тест №1 Проверка ответов.

@@ -10,10 +10,9 @@ import static config.AppConfig.URL;
 import static config.WebDriverConfig.WAIT_SECONDS_TIMEOUT;
 
 
+
 public class WebDriverFactory {
-    public static WebDriver get() {
-        String browserName = System.getenv().get("browser");
-        //System.getenv().get("browser");
+    public static WebDriver get(String browserName) {
 
         WebDriver driver;
         switch (browserName) {

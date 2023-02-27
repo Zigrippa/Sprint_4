@@ -18,7 +18,7 @@ public class OrderFieldsTests {
 
     @Before
     public void setup() {
-        driver = WebDriverFactory.get();
+        driver = WebDriverFactory.get("chrome");
     }
 
     // Дополнительный Тест №3 Проверка ошибок для всех полей формы заказа.
